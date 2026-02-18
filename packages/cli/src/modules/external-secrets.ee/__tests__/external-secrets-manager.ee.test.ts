@@ -604,7 +604,25 @@ describe('ExternalSecretsManager', () => {
 			});
 		});
 
-		it('should return tested state for non-connected provider', async () => {
+		it('should return connected state on successful test', async () => {
+			const dummyProvider = new DummyProvider();
+			jest.spyOn(dummyProvider, 'test').mockResolvedValue([true]);
+
+			mockProviderLifecycle.initialize.mockResolvedValue({
+				success: true,
+				provider: dummyProvider,
+			});
+			mockProviderLifecycle.connect.mockResolvedValue({ success: true });
+
+			const result = await manager.testProviderSettings('dummy', { key: 'value' });
+
+			expect(result).toEqual({
+				success: true,
+				testState: 'connected',
+			});
+		});
+
+		it('should return tested state for non-connected provider (legacy)', async () => {
 			const dummyProvider = new DummyProvider();
 			jest.spyOn(dummyProvider, 'test').mockResolvedValue([true]);
 
@@ -619,7 +637,7 @@ describe('ExternalSecretsManager', () => {
 				settings: {},
 			});
 
-			const result = await manager.testProviderSettings('dummy', { key: 'value' });
+			const result = await manager.testProviderSettingsLegacy('dummy', { key: 'value' });
 
 			expect(result).toEqual({
 				success: true,
@@ -639,6 +657,7 @@ describe('ExternalSecretsManager', () => {
 			expect(result).toEqual({
 				success: false,
 				testState: 'error',
+				error: 'Init failed',
 			});
 		});
 
