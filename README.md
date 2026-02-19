@@ -70,3 +70,34 @@ Want to shape the future of automation? Check out our [job posts](https://n8n.io
 **Short answer:** It means "nodemation" and is pronounced as n-eight-n.
 
 **Long answer:** "I get that question quite often (more often than I expected) so I decided it is probably best to answer it here. While looking for a good name for the project with a free domain I realized very quickly that all the good ones I could think of were already taken. So, in the end, I chose nodemation. 'node-' in the sense that it uses a Node-View and that it uses Node.js and '-mation' for 'automation' which is what the project is supposed to help with. However, I did not like how long the name was and I could not imagine writing something that long every time in the CLI. That is when I then ended up on 'n8n'." - **Jan Oberhauser, Founder and CEO, n8n.io**
+
+
+N8N_HOST=rigdocaisearch.nov.com
+N8N_PORT=8073
+N8N_PROTOCOL=http
+WEBHOOK_URL=http://rigdocaisearch.nov.com:8073/
+N8N_Listen_Address=0.0.0.0
+N8N_SECURE_COOKIE=false
+N8N_ENCRYPTION_KEY=12345678
+DB_TYPE=sqlite
+EXECUTIONS_DATA_PRUNE=true
+EXECUTIONS_DATA_MAX_AGE=168
+EXECUTIONS_DATA_PRUNE_MAX_COUNT=50000
+GENERIC_TIMEZONE=America/New_York
+N8N_LOG_LEVEL=info
+
+pnpm turbo run dev --parallel --env-mode=loose --filter=!@n8n/design-system --filter=!@n8n/chat --filter=!@n8n/task-runner --filter=!n8n-playwright
+
+set N8N_HOST=rigdocaisearch.nov.com&& set N8N_PORT=8073&& set N8N_PROTOCOL=http&& set WEBHOOK_URL=http://rigdocaisearch.nov.com:8073/&& set N8N_Listen_Address=0.0.0.0&& pnpm turbo run dev --parallel --env-mode=loose --filter=!@n8n/design-system --filter=!@n8n/chat --filter=!@n8n/task-runner --filter=!n8n-playwright
+
+
+set N8N_HOST=rigdocaisearch.nov.com&& set N8N_PORT=8073&& set N8N_PROTOCOL=http&& set WEBHOOK_URL=http://rigdocaisearch.nov.com:8073/&& set N8N_Listen_Address=0.0.0.0&& node packages/cli/bin/n8n start
+set N8N_HOST=rigdocaisearch.nov.com&& set N8N_PORT=8073&& set N8N_PROTOCOL=http&& set WEBHOOK_URL=http://rigdocaisearch.nov.com:8073/&& pnpm turbo run dev --parallel --env-mode=loose --filter=!@n8n/design-system --filter=!@n8n/chat --filter=!@n8n/task-runner --filter=!n8n-playwright
+
+
+set N8N_HOST=rigdocaisearch.nov.com&& set N8N_PORT=8074&& set N8N_PROTOCOL=http&& set WEBHOOK_URL=http://rigdocaisearch.nov.com:8074/&& set N8N_Listen_Address=0.0.0.0&& node packages/cli/bin/n8n start
+
+
+
+
+set N8N_USER_FOLDER=C:\projects\rajan8n\n8n\.n8n&& set PLAYWRIGHT_BROWSERS_PATH=C:\projects\rajan8n\n8n\.ms-playwright&& set N8N_HOST=rigdocaisearch.nov.com&& set N8N_PORT=8074&& set N8N_PROTOCOL=http&& set WEBHOOK_URL=http://rigdocaisearch.nov.com:8074/&& set N8N_LISTEN_ADDRESS=0.0.0.0&& set N8N_SECURE_COOKIE=false&& node packages/cli/bin/n8n start
