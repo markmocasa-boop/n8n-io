@@ -1,6 +1,7 @@
 import { defineStore, getActivePinia, type StoreGeneric } from 'pinia';
 import { STORES } from '@n8n/stores';
-import { ref, readonly, inject } from 'vue';
+import { ref, readonly, computed, inject } from 'vue';
+import type { WorkflowHistory } from '@n8n/rest-api-client';
 import { WorkflowDocumentStoreKey } from '@/app/constants/injectionKeys';
 
 // Pinia internal type - _s is the store registry Map
@@ -24,6 +25,33 @@ type AddTagsAction = Action<'addTags', { tags: string[] }>;
 type RemoveTagAction = Action<'removeTag', { tagId: string }>;
 
 type WorkflowDocumentAction = SetTagsAction | AddTagsAction | RemoveTagAction;
+
+/**
+ * Active State
+ */
+
+interface useWorkflowDocumentActiveState {
+	activeVersionId: string | null;
+	activeVersion: WorkflowHistory | null;
+}
+
+function useActiveState() {
+	const activeVersionId = ref<string | null>(null);
+	const activeVersion = ref<WorkflowHistory | null>(null);
+	const active = computed(() => activeVersionId.value !== null);
+
+	function setActiveState(state: useWorkflowDocumentActiveState) {
+		activeVersionId.value = state.activeVersionId;
+		activeVersion.value = state.activeVersion;
+	}
+
+	return {
+		active,
+		activeVersionId: readonly(activeVersionId),
+		activeVersion: readonly(activeVersion),
+		setActiveState,
+	};
+}
 
 /**
  * Gets the store ID for a workflow document store.
@@ -79,6 +107,11 @@ export function useWorkflowDocumentStore(id: WorkflowDocumentId) {
 			}
 		}
 
+		/**
+		 * Active State
+		 */
+		const activeState = useActiveState();
+
 		return {
 			workflowId,
 			workflowVersion,
@@ -86,6 +119,7 @@ export function useWorkflowDocumentStore(id: WorkflowDocumentId) {
 			setTags,
 			addTags,
 			removeTag,
+			...activeState,
 		};
 	})();
 }

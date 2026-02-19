@@ -2,6 +2,7 @@
 import {
 	computed,
 	defineAsyncComponent,
+	inject,
 	nextTick,
 	onActivated,
 	onBeforeMount,
@@ -145,7 +146,7 @@ import { injectWorkflowState } from '@/app/composables/useWorkflowState';
 import { useActivityDetection } from '@/app/composables/useActivityDetection';
 import { useCollaborationStore } from '@/features/collaboration/collaboration/collaboration.store';
 import { injectStrict } from '@/app/utils/injectStrict';
-import { WorkflowIdKey } from '@/app/constants/injectionKeys';
+import { WorkflowIdKey, WorkflowDocumentStoreKey } from '@/app/constants/injectionKeys';
 
 import { N8nCallout, N8nCanvasThinkingPill, N8nCanvasCollaborationPill } from '@n8n/design-system';
 
@@ -284,6 +285,7 @@ const hideNodeIssues = ref(false);
 const fallbackNodes = ref<INodeUi[]>([]);
 
 const workflowId = injectStrict(WorkflowIdKey);
+const workflowDocumentStore = inject(WorkflowDocumentStoreKey, null);
 const routeNodeId = computed(() => {
 	const nodeId = route.params.nodeId;
 	return Array.isArray(nodeId) ? nodeId[0] : nodeId;
@@ -1099,7 +1101,7 @@ async function onCopyTestUrl(id: string) {
 }
 
 async function onCopyProductionUrl(id: string) {
-	const isWorkflowActive = workflowsStore.workflow.active;
+	const isWorkflowActive = workflowDocumentStore?.value?.active ?? false;
 	if (!isWorkflowActive) {
 		toast.showMessage({
 			title: i18n.baseText('nodeWebhooks.showMessage.not.active'),
