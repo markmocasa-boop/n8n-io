@@ -2,10 +2,8 @@ import type { INodeUi } from '@/Interface';
 import type { NodeTypeProvider } from '@/app/utils/nodeTypes/nodeTypeTransforms';
 import { getNodeTypeDisplayableCredentials } from '@/app/utils/nodes/nodeTransforms';
 
-import type {
-	CredentialTypeSetupState,
-	TriggerSetupState,
-} from '@/features/setupPanel/setupPanel.types';
+import type { CredentialTypeSetupState } from '@/features/setupPanel/setupPanel.types';
+import type { IPinData } from 'n8n-workflow';
 
 /**
  * Collects all credential types that a node requires from three sources:
@@ -133,6 +131,7 @@ export function buildTriggerSetupState(
 	triggerCredentialTypes: string[],
 	credentialTypeStates: CredentialTypeSetupState[],
 	hasTriggerExecuted: boolean,
+	demoData?: IPinData[string],
 ): TriggerSetupState {
 	const allCredentialsComplete = triggerCredentialTypes.every((credType) => {
 		const credState = credentialTypeStates.find((s) => s.credentialType === credType);
@@ -142,5 +141,6 @@ export function buildTriggerSetupState(
 	return {
 		node,
 		isComplete: allCredentialsComplete && hasTriggerExecuted,
+		demoData,
 	};
 }
