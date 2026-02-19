@@ -1071,6 +1071,7 @@ defineExpose({
 					@move="onUpdateNodePosition"
 					@add="onClickNodeAdd"
 					@focus="onFocusNode"
+					@replace:node="(id) => emit('replace:node', id)"
 					@add:ai="onAddToAi"
 				>
 					<template v-if="$slots.nodeToolbar" #toolbar="toolbarProps">
